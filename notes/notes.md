@@ -43,7 +43,11 @@ D(x) = (x - n) % 26
 Although it is simple to implement. The security is not top notch. As the number of letters are limited and encryption is proportional to the key and letters, it can be cracked with some difficulty. There are two approaches to achieve this:
 
 - Brute force method - consider all the values in the key space and check if the plain text makes sense. Detecting valid english language helps here.
-- Frequency analysis method - 
+- Frequency analysis method - Frequency distribution is analysed in the cipher text. In english language most frequent letters are E, O, I , T and A.
+  - Take the frequency distribution of the cipher text
+  - Pick out most frequent number in the cipher text (or 2nd most frequent as most frequent can be space)
+  - use the formula:
+    - ``` key = most frequent letter - letter E ```
 
 
 
