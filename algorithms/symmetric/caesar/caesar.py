@@ -6,7 +6,7 @@ ENGLISH_WORDS = []
 
 
 def get_words_data():
-  dictionary = open('../../resources/words.txt', 'r')
+  dictionary = open('../../../resources/words.txt', 'r')
 
   for word in dictionary.read().split('\n'):
     # print(word)
