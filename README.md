@@ -188,7 +188,7 @@ Algorithm:
   - inverse permutation would be performed to get final cipher text block
 
 
-![Permutations for DES](../resources/des_permutation.png)
+![Permutations for DES](./resources/des_permutation.png)
 
 These values are fixed constants in the DES algorithm. The bits in 64 bit block from the message would be placed as per the initial permutation before beginning the round 1. 
 
