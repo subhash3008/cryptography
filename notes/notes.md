@@ -1,4 +1,4 @@
-# Course Notes
+# Cryptography Notes
 
 ### Cryptography
 Way of talking securely between two persons in the presence of third
@@ -31,7 +31,7 @@ Main advantage: private keys not to be exchanged, so no need to many keys.
 - Caesar Cipher
 - Vignere Cipher
 - One-Time Pad
-
+- Data Encryption Standard (DES)
 
 ### Caesar Cipher
 
@@ -145,13 +145,50 @@ PRNG
     - X0 as seed would need to be defined
     - a, c and m define the period
 
+Size of te keyspace is pow(26, size of the message)
+
+Weakness:
+- It is hard to generate the random number, however, PRNG can be predictable and can repeat after a certain period
+- Key length is known
+
+**Shanon's Secrecy**
+
+Size of the message space = Size of the cipher text space
+It means perfect secrecy i.e. if the space for both message and cipher text is same, it is impossible to say with certainity what is the message as with brute force approach, all the possible plain text would be find when trying to decrypt cipher text. How to know, which one is original message?
 
 
+### Data Encryption Standard (DES)
+
+It is a symmetric key algorithm. Designed by IBM. It is a block cipher i.e. the plain text is processed to cipher text in number of blocks. It is hybrid of substitution and permutation cipher. Thus, frequency analysis cannot be used to tap information leaking.
+
+DES has a so called Feistel structure.
+- Split the plain text into 64 bit blocks. These blocks would be input to the DES algorithm and there are going to be 16 rounds in the algorithm.
+- Rounds (iterations) occur during the encryption/decryption
+  - 16 rounds
+    - input for each round is 64bit block
+- Every round need different keys (called subkeys)
+- Main advantage is that the decryption method operations are same as encryption method.
+
+Thus::
+Block size = 64 bits
+Key Size = 64 bits (56 relevant bits are used in algorithm)
+Number of rounds = 16
+Number of keys = 16 (every subkey is 48 bit long)
+Cipher text size = 64 bits
+
+Algorithm:
+- The message and private key would be converted in binary and divided in blocks of 64 bits
+- For each block::
+  - Initial permutation would be performed on the message block
+  - Permuted choice 1 would be performed on key block
+  - subkeys would be created from permuted choice 1 by performing letf circular shift
+    - this would be performed for 16 rounds
+    - for each round, the number of times circular shift can be different
+  - At the end of 16 rounds, 32 bit swap would be performed between two parts of 64 bit transofmed message block
+  - inverse permutation would be performed to get final cipher text block
 
 
+![Permutations for DES](../resources/des_permutation.png)
 
-
-
-
-
+These values are fixed constants in the DES algorithm. The bits in 64 bit block from the message would be placed as per the initial permutation before beginning the round 1. 
 
