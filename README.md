@@ -176,6 +176,8 @@ Number of rounds = 16
 Number of keys = 16 (every subkey is 48 bit long)
 Cipher text size = 64 bits
 
+![DES](./resources/images/des.png)
+
 Algorithm:
 - The message and private key would be converted in binary and divided in blocks of 64 bits
 - For each block::
@@ -186,9 +188,37 @@ Algorithm:
     - for each round, the number of times circular shift can be different
   - At the end of 16 rounds, 32 bit swap would be performed between two parts of 64 bit transofmed message block
   - inverse permutation would be performed to get final cipher text block
+  - ![Permutations for DES](./resources/images/initial_and_reverse_permutation_des.png)
+
+These values are fixed constants in the DES algorithm. The bits in 64 bit block from the message would be placed as per the initial permutation before beginning the round 1.
+
+Round function
+
+![round function](./resources/images/round_function_des.png)
+
+- The 64 bit text is divided into two parts - left and right halves. Same with the key.
+  - Plain text 64 bits - L (32 bits), R (32 bits). Key (64 bits) -> Permutation Choice 1 -> 56 bits -> Kl (28 bits), Kr (28 bits)
+    - Bits 8, 16, 24, 32, 40, 48, 56 and 64 are omitted.
+- Perform left circular shift on Kl and Kr before giving it to Permutation Choice 2 -> Subkey becomes 48 bits.
+- For plain text
+  - R (32 bits) would be going through the expansion function (48 bits)
+    - The expansion table has some duplicated bits to expand the R -> left most column and right most column.
+  - XOR operation would be performed with the Subkey provided after Permutation Choice 2.
+  - S-Box (Substition) operation would be performed. R becomes 32 bits long.
+  - Permutation is performed. Output for which remains 32 bits.
+  - XOR operation with L is performed.
+  - Result is kept as R for next round.
+  - Initial R would be used as L for next round.
+
+Substition Boxes (S-Boxes)
+
+There are 8 boxes in des. Input for each is 6 bits and the output is 4 bits. Each S-box contains 64 items. These S-Boxes are basically look up tables. 6 bit input defines the row and column index in given S-box and associated values give out 4 bits.
+
+S-Boxes :: https://en.wikipedia.org/wiki/DES_supplementary_material
+
+Decryption
+- Same operations. Hence, same functions and hardware can be used to decrypt the encrypted text i.e. encryption with the subkeys in reverse order.
 
 
-![Permutations for DES](./resources/des_permutation.png)
 
-These values are fixed constants in the DES algorithm. The bits in 64 bit block from the message would be placed as per the initial permutation before beginning the round 1. 
 
